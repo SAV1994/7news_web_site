@@ -1,0 +1,26 @@
+{% extends "layout/basic.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{{ user.first_name }} {{ user.last_name }}{% endblock %}
+
+{% block content %}
+  <h1>Personal account</h1>
+  <div class="user-info">
+    <form method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit">Save</button>
+    </form>
+  </div>
+  {% if news %}
+    <div class="user-news">
+      {% for n in news %}
+        <img src="{{ n.image.url }}">
+        {{ n.header }}
+        {{ n.sub_header }}
+        {{ n.teaser }}
+        <a href="#">Comments</a>
+        <a href="#">Edit news</a>
+    </div>
+{% endblock %}

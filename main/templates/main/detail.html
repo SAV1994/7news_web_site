@@ -1,0 +1,39 @@
+{% extends "layout/basic.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{{ user.first_name }} {{ user.last_name }}{% endblock %}
+
+{% block content %}
+  <h1>Personal account</h1>
+  <div class="detail-news">
+    <img src="{{ n.image.url }}">
+    {{ news.header }}
+    {{ news.sub_header }}
+    {{ news.text }}
+  </div>
+  <div class="add-comments">
+    <form method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <span>Comments</span>
+      {% if user.is_authenticated %}
+        {{ user.first_name }}
+        {{ user.last_name }}
+        <a href="{% url 'main:logout' %}">Log out</a>
+      {% else %}}
+        <a href="#">Login</a>
+        <a href="{% url 'main:registrar' %}">Sign up</a>
+        <span>Anonymous</span>
+      {% endif %}
+      <button type="submit">COMMENT</button>
+    </form>
+  </div>
+  <div class="comments">
+    <div class="comments-lvl2">
+      <div class="comments-lvl3">
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

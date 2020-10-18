@@ -1,0 +1,15 @@
+{% extends "layout/basic.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Add news{% endblock %}
+
+{% block content %}
+  <h1>Add news</h1>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit">Delete</button>
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}

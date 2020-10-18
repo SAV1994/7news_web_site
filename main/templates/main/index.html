@@ -1,0 +1,29 @@
+{% extends "layout/basic.html" %}
+
+{% block title %}Main{% endblock %}
+
+{% block content %}
+  {% if banner %}
+  <div class="banner">
+    {{ banner.header }}
+    {{ banner.sub_header }}
+    {{ banner.teaser }}
+    <a href="#">READ MORE</a>
+  </div>
+  {% endif %}
+  <h1>LATEST NEWS</h1>
+  {% if news %}
+  <div class="sorter">
+    <spam>Sort news by: <a href="#">date</a> <a href="#">comments</a> </spam>
+  </div>
+  <div class="news-list">
+    {% for n in news %}
+    <img src="{{ n.image.url }}">
+    <a href="#">{{ n.header }}
+    {{ n.sub_header }}
+    {{ n.teaser }}
+    {% endfor %}</a>
+    <a href="#">Comments</a>
+  </div>
+  {% endif %}
+{% endblock %}
