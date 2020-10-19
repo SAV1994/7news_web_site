@@ -19,7 +19,7 @@
   <div class="news-list">
     {% for n in news %}
     <img src="{{ n.image.url }}">
-    <a href="#">{{ n.header }}
+    <a href="{% url 'main:detail' pk=n.pk %}">{{ n.header }}
     {{ n.sub_header }}
     {{ n.teaser }}
     {% endfor %}</a>

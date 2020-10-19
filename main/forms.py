@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, News
+from .models import User, News, Comment
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
 
@@ -36,9 +36,17 @@ class UserForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'email', 'consent_with_rules', 'password', 'password_confirmation']
 
 
-class NewsForm(forms.ModelForm):
-    author = forms.CharField(widget=forms.HiddenInput)
+class UserUpdateForm(UserForm):
+    consent_with_rules = forms.BooleanField(label='I agree 7NEWS rules', widget=forms.HiddenInput, initial=True)
 
+
+class NewsForm(forms.ModelForm):
     class Meta:
         model = News
         fields = '__all__'
+        widgets = {'author': forms.HiddenInput}
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment

@@ -21,6 +21,8 @@
         {{ n.sub_header }}
         {{ n.teaser }}
         <a href="#">Comments</a>
-        <a href="#">Edit news</a>
+        <a href="{% url 'main:edit_news' pk=n.pk %}">Edit news</a>
+        {% endfor %}
     </div>
+  {% endif %}
 {% endblock %}

@@ -21,7 +21,7 @@ class Rule(models.Model):
 
 
 class News(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, db_index=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     header = models.CharField(max_length=100)
     sub_header = models.CharField(max_length=50)
     image = models.ImageField()
@@ -30,22 +30,9 @@ class News(models.Model):
 
 
 class Comment(models.Model):
-    news = models.ForeignKey(News, on_delete=models.CASCADE, blank=True, db_index=True)
-    author = models.CharField(max_length=20, default='Anonymous')
+    news = models.ForeignKey(News, on_delete=models.CASCADE)
+    comment = models.IntegerField(default=0)
+    author = models.CharField(max_length=20)
     date_added = models.DateTimeField(auto_now_add=True)
     text = models.CharField(max_length=10000)
 
-    class Meta:
-        abstract = True
-
-
-class CommentLvl1(Comment):
-    pass
-
-
-class CommentLvl2(Comment):
-    comment = models.ForeignKey(CommentLvl1, on_delete=models.CASCADE, blank=True, db_index=True)
-
-
-class CommentLvl3(Comment):
-    comment = models.ForeignKey(CommentLvl2, on_delete=models.CASCADE, blank=True, db_index=True)
