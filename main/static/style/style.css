@@ -16,3 +16,11 @@ html, body {
   background-image: url("../img/bg.png");
   z-index: 1;
 }
+
+.button-pressed {
+  color: red;
+}
+
+.comments-container {
+  padding-left: 50px;
+}

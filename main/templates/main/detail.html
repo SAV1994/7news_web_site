@@ -1,8 +1,13 @@
 {% extends "layout/basic.html" %}
-
+{% load static %}
 {% load crispy_forms_tags %}
 
-{% block title %}{{ user.first_name }} {{ user.last_name }}{% endblock %}
+{% block title %}{{ news.header }}{% endblock %}
+
+{% block sctipts %}
+  <script src="{% static 'scripts/comments_counter.js' %}"></script>
+  <script src="{% static 'scripts/detail_script.js' %}"></script>
+{% endblock %}
 
 {% block content %}
   <h1>Personal account</h1>
@@ -11,9 +16,12 @@
     {{ news.header }}
     {{ news.sub_header }}
     {{ news.text }}
+    <span>Комментариев: </span>
+    <span class="comments-counter" data-news-id="{{ news.pk }}"></span>
   </div>
   <div class="add-comments">
     <form method="post">
+      <a name="comment_form"></a>
       {% csrf_token %}
       {{ form|crispy }}
       <span>Comments</span>
@@ -22,18 +30,37 @@
         {{ user.last_name }}
         <a href="{% url 'main:logout' %}">Log out</a>
       {% else %}}
-        <a href="#">Login</a>
+        <a class="login" href="#top">Login</a>
         <a href="{% url 'main:registrar' %}">Sign up</a>
         <span>Anonymous</span>
       {% endif %}
-      <button type="submit">COMMENT</button>
+      <button class="button-comment" type="submit" disabled>COMMENT</button>
     </form>
   </div>
   <div class="comments">
-    <div class="comments-lvl2">
-      <div class="comments-lvl3">
-
+    {% for comment in comments %}
+      <div class="comments-container">
+        {{ comment.value.text }}
+        {{ comment.value.author }}
+        {{ comment.value.date_added|timesince }} ago
+        <a class="button-reply" href="#comment_form" data-reply-id="{{ comment.value.pk }}">Reply</a>
+      {% for com_lvl2 in comment.comms_lvl2 %}
+        <div class="comments-container">
+          {{ com_lvl2.value.text }}
+          {{ com_lvl2.value.author }}
+          {{ com_lvl2.value.date_added|timesince }} ago
+          <a class="button-reply" href="#comment_form" data-reply-id="{{ com_lvl2.value.pk }}">Reply</a>
+          {% for com_lvl3 in  com_lvl2.comms_lvl3 %}
+            <div class="comments-container">
+              {{ com_lvl3.text }}
+              {{ com_lvl3.author }}
+              {{ com_lvl3.date_added|timesince }} ago
+              <a class="button-reply" href="#comment_form" data-reply-id="{{ com_lvl3.pk }}">Reply</a>
+            </div>
+            {% endfor %}
+          </div>
+          {% endfor %}
       </div>
-    </div>
+    {% endfor %}
   </div>
 {% endblock %}

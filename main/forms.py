@@ -2,10 +2,11 @@ from django import forms
 from .models import User, News, Comment
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import AuthenticationForm
 
 
 class UserForm(forms.ModelForm):
-    password = forms.CharField(label='Password', max_length=128, widget=forms.PasswordInput,
+    password = forms.CharField(label='Password', max_length=128, min_length=6, widget=forms.PasswordInput,
                                help_text=password_validation.password_validators_help_text_html)
     password_confirmation = forms.CharField(label='Confirm password', max_length=128, widget=forms.PasswordInput)
     consent_with_rules = forms.BooleanField(label='I agree 7NEWS rules')
@@ -50,3 +51,10 @@ class NewsForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
+        fields = '__all__'
+        widgets = {'news': forms.HiddenInput, 'comment': forms.HiddenInput, 'author': forms.HiddenInput}
+
+
+class UserAuthenticationForm(AuthenticationForm):
+    password = forms.CharField(label='Password', strip=False, min_length=6,
+                               widget=forms.PasswordInput(attrs={'autocomplete': 'current-password'}))

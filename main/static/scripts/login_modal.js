@@ -4,9 +4,9 @@ $(function() {
         $('body').addClass('stop-scrolling');
     });
     $('.modal-container').click(function(event) {
-        if (event.target == this) {
-            $(this).hide()
+        if (event.target === this) {
+            $(this).hide();
             $('body').removeClass('stop-scrolling');
         }
-    })
+    });
 })
