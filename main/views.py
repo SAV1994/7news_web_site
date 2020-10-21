@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.http import Http404
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,7 +12,36 @@ from .models import User, Rule, News, Comment
 from .forms import UserForm, NewsForm, UserUpdateForm, CommentForm, UserAuthenticationForm
 
 
+# supporting objects
+class CurrentUserRequiredUpdateView(UpdateView):
+    """Add checking user_id for update operations"""
+
+    def get(self, request, *args, **kwargs):
+        if request.user.pk != kwargs['pk']:
+            raise Http404
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        if request.user.pk != kwargs['pk']:
+            raise Http404
+        return super().post(request, *args, **kwargs)
+
+
+def _search_comments(comment, comms_lvl3):
+    """Search third level comments for current news and add their to 'comms_lvl3'"""
+
+    entries = Comment.objects.filter(comment=comment.pk)
+    if not entries:
+        return
+    for entry in entries:
+        comms_lvl3.append(entry)
+        _search_comments(entry, comms_lvl3)
+
+
+# controllers
 def index(request):
+    """Main page controller"""
+
     news = News.objects.all()
     if request.path_info == '/by_comments/':
         news = sorted(news, key=lambda entry: entry.comment_set.count(), reverse=True)
@@ -20,6 +50,8 @@ def index(request):
 
 
 class Registration(CreateView):
+    """Register page controller"""
+
     model = User
     template_name = 'main/registrar.html'
     form_class = UserForm
@@ -39,7 +71,9 @@ class Registration(CreateView):
         return context
 
 
-class EditUser(UpdateView, LoginRequiredMixin):
+class EditUser(LoginRequiredMixin, CurrentUserRequiredUpdateView):
+    """Personal page controller"""
+
     model = User
     template_name = 'main/personal.html'
     form_class = UserUpdateForm
@@ -62,6 +96,8 @@ class EditUser(UpdateView, LoginRequiredMixin):
 
 @login_required(login_url='main:login')
 def add_news(request):
+    """Add news page controller"""
+
     print(request.path_info)
     if request.method == 'POST':
         form = NewsForm(request.POST, request.FILES)
@@ -75,12 +111,19 @@ def add_news(request):
 
 @login_required(login_url='main:login')
 def delete_news(request, pk):
+    """Delete news controller"""
+
+    if request.user.pk != pk:
+        raise Http404
     news = News.objects.get(id=pk)
     news.delete()
+    messages.add_message(request, messages.SUCCESS, 'Your news deleted')
     return redirect('main:personal', pk=request.user.pk)
 
 
-class EditNews(UpdateView):
+class EditNews(LoginRequiredMixin, CurrentUserRequiredUpdateView):
+    """Edit news page controller"""
+
     model = News
     template_name = 'main/news.html'
     form_class = NewsForm
@@ -93,6 +136,8 @@ class EditNews(UpdateView):
 
 
 def detail(request, pk):
+    """Detail page controller"""
+
     news = News.objects.get(id=pk)
     comments = []
     comments_lvl1 = Comment.objects.filter(news_id=pk, comment=0)
@@ -120,18 +165,9 @@ def detail(request, pk):
     return render(request, 'main/detail.html', context)
 
 
-def _search_comments(comment, comms_lvl3):
-    entries = Comment.objects.filter(comment=comment.pk)
-    if not entries:
-        return
-    for entry in entries:
-        comms_lvl3.append(entry)
-        _search_comments(entry, comms_lvl3)
-
-
-
-
 class Login(LoginView):
+    """Login controller"""
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = UserAuthenticationForm()

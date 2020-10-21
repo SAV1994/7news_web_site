@@ -13,7 +13,7 @@
   <h1>Personal account</h1>
   <div class="detail-news">
     <img src="{{ news.image.url }}">
-    {{ news.header }}
+    <a href="{% url 'main:edit_news' pk=news.pk %}">{{ news.header }}</a>
     {{ news.sub_header }}
     {{ news.text }}
     <span>Комментариев: </span>

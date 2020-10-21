@@ -20,8 +20,8 @@ from .settings import DEBUG, MEDIA_URL, MEDIA_ROOT
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('main.urls')),
     path('api/', include('api.urls')),
+    path('', include('main.urls')),
 ]
 
 if DEBUG:

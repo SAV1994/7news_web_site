@@ -28,6 +28,9 @@ class News(models.Model):
     teaser = models.CharField(max_length=320)
     full_text = models.CharField(max_length=10000)
 
+    class Meta:
+        verbose_name_plural = 'News'
+
 
 class Comment(models.Model):
     news = models.ForeignKey(News, on_delete=models.CASCADE)
@@ -35,4 +38,3 @@ class Comment(models.Model):
     author = models.CharField(max_length=20)
     date_added = models.DateTimeField(auto_now_add=True)
     text = models.CharField(max_length=10000)
-

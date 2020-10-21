@@ -10,9 +10,9 @@ urlpatterns = [
     path('registrar/', views.Registration.as_view(), name='registrar'),
     path('login/', views.Login.as_view(), name='login'),
     path('logout', LogoutView.as_view(), name='logout'),
+    path('news/', views.add_news, name='add_news'),
     path('detail/<int:pk>', views.detail, name='detail'),
     path('user/<int:pk>', views.EditUser.as_view(), name='personal'),
     path('news/<int:pk>', views.EditNews.as_view(), name='edit_news'),
     path('delete_news/<int:pk>', views.delete_news, name='delete_news'),
-    path('news/', views.add_news, name='add_news'),
 ]
