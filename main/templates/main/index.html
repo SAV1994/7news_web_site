@@ -5,31 +5,58 @@
 
 {% block sctipts %}
   <script src="{% static 'scripts/sort_buttons.js' %}"></script>
-{#  <script src="{% static 'scripts/comments_counter.js' %}"></script>#}
+  <script src="{% static 'scripts/comments_counter.js' %}"></script>
 {% endblock %}
 
 {% block content %}
   {% if banner %}
-    <div class="banner">
-      {{ banner.header }}
-      {{ banner.sub_header }}
-      {{ banner.teaser }}
-      <a href="{% url 'main:detail' pk=banner.pk %}">READ MORE</a>
-    </div>
+    <article>
+      <div class="container-fluid banner">
+        <div class="row">
+          <div class="col-6 banner-context">
+            <h3 class="banner-header">{{ banner.header }}</h3>
+            <h4 class="banner-subheader">{{ banner.sub_header }}</h4>
+            <p class="banner-teaser">{{ banner.teaser }}</p>
+          </div>
+          <div class="col-6 banner-link">
+            <a href="{% url 'main:detail' pk=banner.pk %}">READ&nbsp;MORE</a>
+          </div>
+        </div>
+      </div>
+    </article>
   {% endif %}
-    <h1>LATEST NEWS</h1>
-  {% if news %}
-    <div class="sorter">
-      <spam>Sort news by: <a class="sort-by-date button-pressed" href="{% url 'main:index' %}">date</a> <a class="sort-by-comments" href="{% url 'main:by_comments' %}">comments</a> </spam>
-    </div>
-    <div class="news-list">
-      {% for n in news %}
-        <img src="{{ n.image.url }}">
-        <a href="{% url 'main:detail' pk=n.pk %}">{{ n.header }}
-        {{ n.sub_header }}
-        {{ n.teaser }}
-        <a href="{% url 'main:detail' pk=n.pk %}#comment_form">Comments<span class="comments-counter" data-news-id="{{ n.pk }}"></span></a>
-      {% endfor %}</a>
-    </div>
-  {% endif %}
+  <div class="container-fluid news-list">
+    {% if news %}
+      <div class="row news-list-nav">
+        <div class="col-6">
+          <div class="rectangle"></div>
+          <h1 class="main-header">LATEST NEWS</h1>
+        </div>
+        <div class="col-6 sorter">
+          <spam>Sort news by:&nbsp;&nbsp;&nbsp; <a class="sort-by-date button-pressed" href="{% url 'main:index' %}">date</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="sort-by-comments" href="{% url 'main:by_comments' %}">comments</a> </spam>
+        </div>
+      </div>
+      <div class="row news-container">
+        {% for n in news %}
+          <div class="col-6">
+            <article>
+              <div class="row">
+                <div class="col-7 news-image">
+                  <img src="{{ n.image.url }}">
+                </div>
+                <div class="col-5 news-info">
+                  <a href="{% url 'main:detail' pk=n.pk %}">
+                    <h3>{{ n.header }}</h3>
+                    <h4>{{ n.sub_header }}</h4>
+                    <p>{{ n.teaser }}</p>
+                  </a>
+                  <a class="comm" href="{% url 'main:detail' pk=n.pk %}#comment_form"><span class="comments-counter" data-news-id="{{ n.pk }}"></span>&nbsp;Comments</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
 {% endblock %}

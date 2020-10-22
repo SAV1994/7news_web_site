@@ -1,3 +1,4 @@
+import random
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.http import Http404
@@ -43,9 +44,10 @@ def index(request):
     """Main page controller"""
 
     news = News.objects.all()
+    banner = random.choice(news)
     if request.path_info == '/by_comments/':
         news = sorted(news, key=lambda entry: entry.comment_set.count(), reverse=True)
-    context = {'news': news}
+    context = {'news': news, 'banner': banner}
     return render(request, 'main/index.html', context)
 
 
