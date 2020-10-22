@@ -45,7 +45,7 @@ class NewsForm(forms.ModelForm):
     class Meta:
         model = News
         fields = '__all__'
-        widgets = {'author': forms.HiddenInput}
+        widgets = {'author': forms.HiddenInput, 'teaser': forms.Textarea, 'full_text': forms.Textarea}
 
 
 class CommentForm(forms.ModelForm):

@@ -29,23 +29,39 @@
   <body>
     <div class="modal-container">
         <div class="registration-form">
-          <h2>Login</h2>
           <form method="post" action="{% url 'main:login' %}">
+            <a name="top"></a>
+            <div class="row login-header">
+              <h2 class="col-8">LOGIN</h2>
+              <div class="col-4">
+                <button class="btn-close" type="button"></button>
+              </div>
+            </div>
+            <hr>
             {% csrf_token %}
-            {{ login_form|crispy }}
-            <button type="submit">Login</button>
+            <div class="row">
+              <div class="col-12 login-form">
+                <p>Login</p>
+                {{ login_form.username }}
+              </div>
+              <div class=" col-12 login-form">
+                <p>Password</p>
+                {{ login_form.password }}
+              </div>
+            </div>
+            <hr>
+            <button class="btn-submit" type="submit">LOGIN</button>
           </form>
         </div>
       </div>
     <header>
       <div class="container-fluid">
         <div class="row site-nav">
-          <a name="top"></a>
           <div class="col-4 site-nav-logo">
             {% if request.path == '/' %}
               <img class="logo" src="{% static 'img/logo.svg' %}" alt="Logo">
             {% else %}
-              <a href="{% url 'main:index' %}"><img src="{% static 'img/logo.svg' %}" alt="Logo"></a>
+              <a href="{% url 'main:index' %}"><img class="logo" src="{% static 'img/logo.svg' %}" alt="Logo"></a>
             {% endif %}
           </div>
           <div class="col-8 site-nav-links">

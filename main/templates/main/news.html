@@ -9,15 +9,27 @@
 {% endblock %}
 
 {% block content %}
-  <h1>Add news</h1>
-  <form class="news-form" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form|crispy }}
-    {% if request.path_info == '/news/' %}
-      <button class="button-save" type="submit" disabled>Save</button>
-    {% else %}
-      <a href="{% url 'main:delete_news' pk=news.pk %}"><button type="button">Delete</button></a>
-      <button class="button-save" type="submit">Save</button>
-    {% endif %}
-  </form>
+  <div class="container-fluid">
+    <div class="row news-list-nav">
+      <div class="col-6">
+        <div class="rectangle"></div>
+        <h1 class="main-header">ADD NEWS</h1>
+      </div>
+    </div>
+    <form class="news-form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.author|as_crispy_field }}
+      {{ form.header|as_crispy_field }}
+      {{ form.sub_header|as_crispy_field }}
+      {{ form.image|as_crispy_field }}
+      {{ form.teaser|as_crispy_field }}
+      {{ form.full_text|as_crispy_field }}
+      {% if request.path_info == '/news/' %}
+        <button class="button-save" type="submit" disabled>Save</button>
+      {% else %}
+        <a href="{% url 'main:delete_news' pk=news.pk %}"><button type="button">Delete</button></a>
+        <button class="button-save" type="submit">Save</button>
+      {% endif %}
+    </form>
+  </div>
 {% endblock %}

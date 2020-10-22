@@ -93,23 +93,13 @@ h1, h2, h3, h4, p {
   padding: 0;
 }
 
+.asteriskField {
+  display: none;
+}
+
 .container-fluid {
   max-width: 1440px;
   min-width: 320px;
-}
-
-.stop-scrolling {
-  height: 100%;
-  overflow: hidden;
-}
-
-.modal-container {
-  position: fixed;
-  display: none;
-  width: 100%;
-  height: 100%;
-  background-image: url("../img/bg.png");
-  z-index: 1;
 }
 
 .comments-container {
@@ -303,6 +293,83 @@ h1, h2, h3, h4, p {
   padding-bottom: 80px;
 }
 
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
+.login-form {
+  margin: 0;
+  padding: 0 250px 0 55px;
+}
+
+.modal-container {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../img/bg.png");
+  z-index: 1;
+}
+
+.registration-form {
+  position: fixed;
+  max-width: 730px;
+  height: 400px;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.btn-submit {
+  display: inline-block;
+}
+
+.login-form input {
+  margin-bottom: 20px;
+  width: 100%;
+  height: 43px;
+  border-radius: 5px;
+  border-color: #969393;
+}
+
+.btn-close {
+  margin: 30px 30px 0  0;
+  width: 14px;
+  height: 14px;
+  background-image: url("../img/close-btn.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: none;
+}
+
+.login-header .col-4 {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.registration-form h2 {
+  padding: 30px 0 17px 55px;
+  font-size: 30px;
+}
+
+.registration-form hr {
+  margin: 15px 25px 20px 25px;
+}
+
+.btn-submit {
+  position: absolute;
+  right: 35px;
+  bottom: 25px;
+  width: 160px;
+  height: 50px;
+  background-color: #E60000;
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+
 @media (max-width: 1180px) {
   .logo {
     padding-left: 10px;
@@ -390,6 +457,10 @@ h1, h2, h3, h4, p {
     font-size: 20px;
   }
 
+  .rectangle {
+    height: 20px;
+  }
+
   .news-image {
     flex: 0 0 50%;
     max-width: 50%;
@@ -402,6 +473,11 @@ h1, h2, h3, h4, p {
 
   .news-image img {
     width: 100%;
+  }
+
+  .login-form {
+    min-width: 320px;
+    padding-right: 55px;
   }
 }
 
@@ -445,6 +521,10 @@ h1, h2, h3, h4, p {
 
   .sorter, .main-header {
     font-size: 14px;
+  }
+
+  .rectangle {
+    height: 14px;
   }
 
   .news-container .row {
