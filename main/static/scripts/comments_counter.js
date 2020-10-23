@@ -1,4 +1,5 @@
 $(function() {
+
     function CommentCountView() {
         $('.comments-counter').each(function(index, counter) {
             const url_request = `${$(location).attr('protocol')}//${$(location).attr('host')}/api/${counter.dataset.newsId}`;
@@ -7,6 +8,7 @@ $(function() {
             });
         });
     }
+
     CommentCountView();
     setInterval(CommentCountView, 30000);
 })

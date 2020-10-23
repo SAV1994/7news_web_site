@@ -334,14 +334,17 @@ h1, h2, h3, h4, p {
   border-color: #969393;
 }
 
-.btn-close {
-  margin: 30px 30px 0  0;
+.btn-close, .btn-reset {
   width: 14px;
   height: 14px;
   background-image: url("../img/close-btn.svg");
   background-size: contain;
   background-repeat: no-repeat;
   border: none;
+}
+
+.btn-close {
+  margin: 30px 30px 0  0;
 }
 
 .login-header .col-4 {
@@ -358,16 +361,107 @@ h1, h2, h3, h4, p {
   margin: 15px 25px 20px 25px;
 }
 
-.btn-submit {
-  position: absolute;
-  right: 35px;
-  bottom: 25px;
+.btn-submit, .btn-news {
   width: 160px;
   height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #E60000;
   border: none;
   border-radius: 5px;
   color: white;
+}
+
+.btn-submit {
+  position: absolute;
+  right: 35px;
+  bottom: 25px;
+}
+
+.red-row {
+ margin: 0 auto 50px auto;
+  max-width: 1440px;
+  min-width: 320px;
+  height: 15px;
+  background-color: #E60000;
+}
+.news-form .row {
+  margin-left: 85px;
+}
+
+.main-content {
+  max-width: 1140px;
+  padding-bottom: 120px;
+}
+
+#id_image {
+  position: fixed;
+  top: -500px;
+}
+
+.image-input label{
+  margin-right: 10px;
+  width: 160px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #ffff;
+  background-color: #C4C4C4;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.focus {
+  outline: -webkit-focus-ring-color auto 5px;
+}
+
+#id_image:focus + #id_sub_header{
+  outline: 1px dotted #000;
+}
+
+.image-input {
+  margin-bottom: 15px;
+  margin-left: 15px;
+  padding-right: 30px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.image-input h4 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 16px;
+}
+
+.textarea {
+  height: 120px !important;
+}
+
+.textinput {
+  height: 43px;
+}
+
+.news-btns {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.image-input-btns {
+  display: flex;
+  flex-direction: row;
+}
+
+#div_id_image div {
+  position: absolute;
+  top: -500px;
+}
+
+.btn-news {
+  margin-left: 20px;
 }
 
 @media (max-width: 1180px) {
@@ -479,6 +573,21 @@ h1, h2, h3, h4, p {
     min-width: 320px;
     padding-right: 55px;
   }
+
+  .news-form .row {
+    margin-left: 0;
+  }
+
+  .image-input {
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .image-input-btns {
+    margin-top: 60px;
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 
 @media (max-width: 600px) {
@@ -552,5 +661,9 @@ h1, h2, h3, h4, p {
   .news-info {
     flex: 0 0 100%;
     max-width: 100%;
+  }
+
+  .news-form .container-fluid .col-12 {
+    padding: 0;
   }
 }

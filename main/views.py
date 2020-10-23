@@ -14,20 +14,6 @@ from .forms import UserForm, NewsForm, UserUpdateForm, CommentForm, UserAuthenti
 
 
 # supporting objects
-class CurrentUserRequiredUpdateView(UpdateView):
-    """Add checking user_id for update operations"""
-
-    def get(self, request, *args, **kwargs):
-        if request.user.pk != kwargs['pk']:
-            raise Http404
-        return super().get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        if request.user.pk != kwargs['pk']:
-            raise Http404
-        return super().post(request, *args, **kwargs)
-
-
 def _search_comments(comment, comms_lvl3):
     """Search third level comments for current news and add their to 'comms_lvl3'"""
 
@@ -73,13 +59,24 @@ class Registration(CreateView):
         return context
 
 
-class EditUser(LoginRequiredMixin, CurrentUserRequiredUpdateView):
+class EditUser(LoginRequiredMixin, UpdateView):
     """Personal page controller"""
 
     model = User
     template_name = 'main/personal.html'
     form_class = UserUpdateForm
     success_url = reverse_lazy('main:index')
+
+    def get(self, request, *args, **kwargs):
+        print(kwargs)
+        if request.user.pk != kwargs['pk']:
+            raise Http404
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        if request.user.pk != kwargs['pk']:
+            raise Http404
+        return super().post(request, *args, **kwargs)
 
     def form_valid(self, form):
         response_redirect = super().form_valid(form)
@@ -115,7 +112,8 @@ def add_news(request):
 def delete_news(request, pk):
     """Delete news controller"""
 
-    if request.user.pk != pk:
+    news_author = News.objects.get(id=pk).author_id
+    if request.user.pk != news_author:
         raise Http404
     news = News.objects.get(id=pk)
     news.delete()
@@ -123,13 +121,25 @@ def delete_news(request, pk):
     return redirect('main:personal', pk=request.user.pk)
 
 
-class EditNews(LoginRequiredMixin, CurrentUserRequiredUpdateView):
+class EditNews(LoginRequiredMixin, UpdateView):
     """Edit news page controller"""
 
     model = News
     template_name = 'main/news.html'
     form_class = NewsForm
     success_url = reverse_lazy('main:add_news')
+
+    def get(self, request, *args, **kwargs):
+        news_author = News.objects.get(id=kwargs['pk']).author_id
+        if request.user.pk != news_author:
+            raise Http404
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        news_author = News.objects.get(id=kwargs['pk']).author_id
+        if request.user.pk != news_author:
+            raise Http404
+        return super().post(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         print(self.request.method)

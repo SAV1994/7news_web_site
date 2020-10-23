@@ -46,6 +46,7 @@ class NewsForm(forms.ModelForm):
         model = News
         fields = '__all__'
         widgets = {'author': forms.HiddenInput, 'teaser': forms.Textarea, 'full_text': forms.Textarea}
+        labels = {'image': 'LOAD', 'teaser': 'Teaser (maximum of 320 characters)'}
 
 
 class CommentForm(forms.ModelForm):
