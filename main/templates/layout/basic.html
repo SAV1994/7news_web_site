@@ -30,7 +30,6 @@
     <div class="modal-container">
         <div class="registration-form">
           <form method="post" action="{% url 'main:login' %}">
-            <a name="top"></a>
             <div class="row login-header">
               <h2 class="col-8">LOGIN</h2>
               <div class="col-4">
@@ -73,7 +72,7 @@
               </span>
             {% else %}
               <span class="auth-links">
-                <a class="login" href="#top">Login</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="register-link" href="{% url 'main:registrar' %}">Register</a>
+                <a class="login">Login</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="register-link" href="{% url 'main:registrar' %}">Register</a>
               </span>
             {% endif %}
           </div>

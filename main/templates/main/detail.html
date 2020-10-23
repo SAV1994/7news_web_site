@@ -10,57 +10,96 @@
 {% endblock %}
 
 {% block content %}
-  <h1>Personal account</h1>
-  <div class="detail-news">
-    <img src="{{ news.image.url }}">
-    <a href="{% url 'main:edit_news' pk=news.pk %}">{{ news.header }}</a>
-    {{ news.sub_header }}
-    {{ news.text }}
-    <span>Комментариев: </span>
-    <span class="comments-counter" data-news-id="{{ news.pk }}"></span>
-  </div>
-  <div class="add-comments">
-    <form method="post">
-      <a name="comment_form"></a>
-      {% csrf_token %}
-      {{ form|crispy }}
-      <span>Comments</span>
-      {% if user.is_authenticated %}
-        {{ user.first_name }}
-        {{ user.last_name }}
-        <a href="{% url 'main:logout' %}">Log out</a>
-      {% else %}}
-        <a class="login" href="#top">Login</a>
-        <a href="{% url 'main:registrar' %}">Sign up</a>
-        <span>Anonymous</span>
-      {% endif %}
-      <button class="button-comment" type="submit" disabled>COMMENT</button>
-    </form>
-  </div>
-  <div class="comments">
-    {% for comment in comments %}
-      <div class="comments-container">
-        {{ comment.value.text }}
-        {{ comment.value.author }}
-        {{ comment.value.date_added|timesince }} ago
-        <a class="button-reply" href="#comment_form" data-reply-id="{{ comment.value.pk }}">Reply</a>
-      {% for com_lvl2 in comment.comms_lvl2 %}
-        <div class="comments-container">
-          {{ com_lvl2.value.text }}
-          {{ com_lvl2.value.author }}
-          {{ com_lvl2.value.date_added|timesince }} ago
-          <a class="button-reply" href="#comment_form" data-reply-id="{{ com_lvl2.value.pk }}">Reply</a>
-          {% for com_lvl3 in  com_lvl2.comms_lvl3 %}
-            <div class="comments-container">
-              {{ com_lvl3.text }}
-              {{ com_lvl3.author }}
-              {{ com_lvl3.date_added|timesince }} ago
-              <a class="button-reply" href="#comment_form" data-reply-id="{{ com_lvl3.pk }}">Reply</a>
-            </div>
-            {% endfor %}
-          </div>
-          {% endfor %}
+  <div class="red-row"></div>
+  <div class="container-fluid detail-content">
+    <article>
+      <div class="detail-news">
+        <div class="news-content">
+          <a href="{% url 'main:edit_news' pk=news.pk %}"><h1 class="header">{{ news.header }}</h1></a>
+          <h2 class="sub-header">{{ news.sub_header }}</h2>
+          <p class="text">{{ news.full_text }}</p>
+        </div>
+        <div class="news-img">
+           <img src="{{ news.image.url }}">
+        </div>
       </div>
-    {% endfor %}
+    </article>
+    <div class="add-comments">
+      <form class="comment-form row" method="post">
+        <div class="comment-form-input col-7">
+          <a name="comment_form"></a>
+          {% csrf_token %}
+          {{ form|crispy }}
+        </div>
+        <div class="comment-form-nav col-5">
+          <div class="comm">
+            <span class="comments-counter" data-news-id="{{ news.pk }}"></span>
+            <span>Comments</span>
+          </div>
+          {% if user.is_authenticated %}
+            <div class="user">{{ user.first_name }} {{ user.last_name }}</div>
+            <div class="comm-login">
+              <a href="{% url 'main:logout' %}">Log&nbsp;out</a>
+            </div>
+          {% else %}
+            <div class="user">Anonymous</div>
+            <div class="comm-login">
+              <a class="login">Login</a>&nbsp;or&nbsp;<a href="{% url 'main:registrar' %}">Sign&nbsp;up</a>
+            </div>
+          {% endif %}
+          <button class="button-comment" type="submit" disabled>COMMENT</button>
+        </div>
+      </form>
+    </div>
+    <div class="comments">
+      {% for comment in comments %}
+        <div>
+          <div class="container-comm-1 row">
+            <div class="comm-text col-7">
+              {{ comment.value.text }}
+            </div>
+            <div class="comm-nav col-4">
+              <div class="comm-author">by&nbsp;{{ comment.value.author }}</div>
+              <div class="comm-date">
+                {{ comment.value.date_added|timesince }}&nbsp;ago
+              </div>
+              <a class="button-reply" href="#comment_form" data-reply-id="{{ comment.value.pk }}">REPLY</a>
+            </div>
+          </div>
+          {% for com_lvl2 in comment.comms_lvl2 %}
+            <div class="container-comm">
+              <div class="row">
+                <div class="comm-text col-7">
+                  {{ com_lvl2.value.text }}
+                </div>
+                <div class="comm-nav col-4">
+                  <div class="comm-author">by&nbsp;{{ com_lvl2.value.author }}</div>
+                  <div class="comm-date">
+                    {{ com_lvl2.value.date_added|timesince }}&nbsp;ago
+                  </div>
+                  <a class="button-reply" href="#comment_form" data-reply-id="{{ com_lvl2.value.pk }}">Reply</a>
+                </div>
+              </div>
+              {% for com_lvl3 in  com_lvl2.comms_lvl3 %}
+                <div class="container-comm lvl-3">
+                  <div class="row">
+                    <div class="comm-text col-7">
+                      {{ com_lvl3.text }}
+                    </div>
+                    <div class="comm-nav col-4">
+                      <div class="comm-author">by&nbsp;{{ com_lvl3.author }}</div>
+                      <div class="comm-date">
+                        {{ com_lvl3.date_added|timesince }}&nbsp;ago
+                      </div>
+                      <a class="button-reply" href="#comment_form" data-reply-id="{{ com_lvl3.pk }}">Reply</a>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
   </div>
 {% endblock %}

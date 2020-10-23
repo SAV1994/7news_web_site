@@ -53,7 +53,9 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = '__all__'
-        widgets = {'news': forms.HiddenInput, 'comment': forms.HiddenInput, 'author': forms.HiddenInput}
+        widgets = {'news': forms.HiddenInput, 'comment': forms.HiddenInput, 'author': forms.HiddenInput,
+                   'text': forms.Textarea}
+        labels = {'text': 'leave a comment'}
 
 
 class UserAuthenticationForm(AuthenticationForm):

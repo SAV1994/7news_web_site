@@ -66,6 +66,7 @@ class EditUser(LoginRequiredMixin, UpdateView):
     template_name = 'main/personal.html'
     form_class = UserUpdateForm
     success_url = reverse_lazy('main:index')
+    login_url = 'main:login'
 
     def get(self, request, *args, **kwargs):
         print(kwargs)
@@ -128,6 +129,7 @@ class EditNews(LoginRequiredMixin, UpdateView):
     template_name = 'main/news.html'
     form_class = NewsForm
     success_url = reverse_lazy('main:add_news')
+    login_url = 'main:login'
 
     def get(self, request, *args, **kwargs):
         news_author = News.objects.get(id=kwargs['pk']).author_id
