@@ -1,7 +1,7 @@
 $(function () {
 
     function CheckForm() {
-        if ($('#id_header').val() !== '' && $('#id_sub_header').val() !== '' && $('#id_image').val() !== '' && $('#id_teaser').val() !== '' && $('#id_full_text').val() !== '') {
+        if ($('#id_header').val() !== '' && $('#id_sub_header').val() !== '' && ($('#id_image').val() !== '' || location.pathname !== '/news/') && $('#id_teaser').val() !== '' && $('#id_full_text').val() !== '') {
             $('.button-save').prop('disabled', false);
         } else {
             $('.button-save').prop('disabled', true);

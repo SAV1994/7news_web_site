@@ -63,6 +63,7 @@
                       <p>{{ n.teaser }}</p>
                     </a>
                     <a class="comm" href="{% url 'main:detail' pk=n.pk %}#comment_form"><span class="comments-counter" data-news-id="{{ n.pk }}"></span>&nbsp;Comments</a>
+                    <a class="edit-news" href="{% url 'main:edit_news' pk=n.pk %}">Edit news</a>
                   </div>
                 </div>
               </article>

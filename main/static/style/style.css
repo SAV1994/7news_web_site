@@ -524,7 +524,7 @@ a:hover {
 }
 
 .comm-login {
-  margin: 10px;
+  margin-bottom: 10px;
   font-size: 15px;
   color: #969393;
 }
@@ -625,6 +625,14 @@ a:hover {
   position: absolute;
   top: 200px;
   right: 20px;
+}
+
+.edit-news {
+  padding-left: 30px;
+  display: block;
+  background-image: url("../img/edit.svg");
+  background-repeat: no-repeat;
+  color: #E60000;
 }
 
 @media (max-width: 1180px) {
@@ -830,7 +838,7 @@ a:hover {
     font-size: 16px;
   }
 
-  .news-info p , .comm {
+  .news-info p , .comm, .edit-news {
     font-size: 13px;
   }
 
