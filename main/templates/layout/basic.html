@@ -7,6 +7,7 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>7news - {% block title %}{% endblock %}</title>
 
@@ -27,47 +28,94 @@
   </head>
   <body>
     <div class="modal-container">
-      <div class="registration-form">
-        <h2>Login</h2>
-        <form method="post" action="{% url 'main:login' %}">
-          {% csrf_token %}
-          {{ login_form|crispy }}
-          <button type="submit">Login</button>
-        </form>
+        <div class="registration-form">
+          <form method="post" action="{% url 'main:login' %}">
+            <div class="row login-header">
+              <h2 class="col-8">LOGIN</h2>
+              <div class="col-4">
+                <button class="btn-close" type="button"></button>
+              </div>
+            </div>
+            <hr>
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-12 login-form">
+                <p>Login</p>
+                {{ login_form.username }}
+              </div>
+              <div class=" col-12 login-form">
+                <p>Password</p>
+                {{ login_form.password }}
+              </div>
+            </div>
+            <hr>
+            <button class="btn-submit" type="submit">LOGIN</button>
+          </form>
+        </div>
       </div>
-    </div>
     <header>
-      <div>
-        <a name="top"></a>
-        {% if request.path == '/' %}
-          <img src="{% static 'img/logo.svg' %}" alt="Logo">
-        {% else %}
-          <a href="{% url 'main:index' %}"><img src="{% static 'img/logo.svg' %}" alt="Logo"></a>
-        {% endif %}
-        <a href="{% url 'main:index' %}">Latest News</a>
-        <a href="{% url 'main:add_news' %}">Add News</a>
-        {% if user.is_authenticated %}
-          <a href="{% url 'main:personal' pk=user.pk %}">{{ user.first_name }} {{ user.last_name }}</a>
-          <a href="{% url 'main:logout' %}">Log out</a>
-        {% else %}
-          <a class="login" href="#top">Login</a>
-          <a href="{% url 'main:registrar' %}">Register</a>
-        {% endif %}
+      <div class="container-fluid">
+        <div class="row site-nav">
+          <div class="col-4 site-nav-logo">
+            {% if request.path == '/' %}
+              <img class="logo" src="{% static 'img/logo.svg' %}" alt="Logo">
+            {% else %}
+              <a href="{% url 'main:index' %}"><img class="logo" src="{% static 'img/logo.svg' %}" alt="Logo"></a>
+            {% endif %}
+          </div>
+          <div class="col-8 site-nav-links">
+            <a class="main-link" href="{% url 'main:index' %}">LATEST&nbsp;NEWS</a>
+            <a class="add-news-link" href="{% url 'main:add_news' %}">ADD&nbsp;NEWS</a>
+            {% if user.is_authenticated %}
+              <span class="auth-links">
+                <a href="{% url 'main:personal' pk=user.pk %}">{{ user.first_name }}&nbsp;<span class="last-name">{{ user.last_name }}</span></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{% url 'main:logout' %}">Log&nbsp;out</a>
+              </span>
+            {% else %}
+              <span class="auth-links">
+                <a class="login">Login</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="register-link" href="{% url 'main:registrar' %}">Register</a>
+              </span>
+            {% endif %}
+          </div>
+        </div>
       </div>
     </header>
-    {% bootstrap_messages %}
+    <div class="container-fluid">{% bootstrap_messages %}</div>
+    <main>
 
-    {% block content %}{% endblock %}
+      {% block content %}{% endblock %}
 
+    </main>
     <footer>
-      <a href="mailto:omakarov@btc-s.ru?cc=anton@btc-s.ru">CONNECT WITH 7NEWS</a>
-      <a href="{% static 'privacy_policy.pdf' %}">PRIVACY POLICY</a>
-      {% if request.path == '/' %}
-        <img src="{% static 'img/logo.svg' %}" alt="Logo">
-        {% else %}
-        <a href="{% url 'main:index' %}"><img src="{% static 'img/logo.svg' %}" alt="Logo"></a>
-      {% endif %}
-      <spam>All rights reserve (C) 1980 - 2020"</spam>
+      <div class="container-fluid">
+        <div class="row site-footer">
+          <div class="col-6 block-1">
+            <div class="row">
+              <div class="col-6 mail-link">
+                <a href="mailto:omakarov@btc-s.ru?cc=anton@btc-s.ru">CONNECT&nbsp;WITH 7NEWS</a>
+              </div>
+              <div class="col-6 doc-link">
+                <a href="{% static 'privacy_policy.pdf' %}">PRIVACY POLICY</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 block-2">
+            <div class="row">
+              {% if request.path == '/' %}
+                <div class="col-6 footer-logo">
+                  <img src="{% static 'img/logo.svg' %}" alt="Logo">
+                </div>
+              {% else %}
+                <div class="col-6 footer-logo">
+                  <a href="{% url 'main:index' %}"><img src="{% static 'img/logo.svg' %}" alt="Logo"></a>
+                </div>
+              {% endif %}
+              <div class="col-6 copyright">
+                <span>All&nbsp;rights&nbsp;reserve&nbsp;(C) 1980&nbsp;-&nbsp;2020</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </footer>
   </body>
 </html>
