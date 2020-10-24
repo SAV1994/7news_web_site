@@ -33,7 +33,7 @@
           <h1 class="main-header">LATEST NEWS</h1>
         </div>
         <div class="col-6 sorter">
-          <spam>Sort news by:&nbsp;&nbsp;&nbsp; <a class="sort-by-date button-pressed" href="{% url 'main:index' %}">date</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="sort-by-comments" href="{% url 'main:by_comments' %}">comments</a> </spam>
+          <span>Sort news by:&nbsp;&nbsp;&nbsp; <a class="sort-by-date button-pressed" href="{% url 'main:index' %}">date</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="sort-by-comments" href="{% url 'main:by_comments' %}">comments</a> </span>
         </div>
       </div>
       <div class="row news-container">
@@ -42,7 +42,7 @@
             <article>
               <div class="row">
                 <div class="col-7 news-image">
-                  <img src="{{ n.image.url }}">
+                  <img src="{{ n.image.url }}" alt="image">
                 </div>
                 <div class="col-5 news-info">
                   <a href="{% url 'main:detail' pk=n.pk %}">
