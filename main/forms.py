@@ -6,8 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 
 
 class UserForm(forms.ModelForm):
-    password = forms.CharField(label='Password', max_length=128, min_length=6, widget=forms.PasswordInput,
-                               help_text=password_validation.password_validators_help_text_html)
+    password = forms.CharField(label='Password', max_length=128, min_length=6, widget=forms.PasswordInput)
     password_confirmation = forms.CharField(label='Confirm password', max_length=128, widget=forms.PasswordInput)
     consent_with_rules = forms.BooleanField(label='I agree 7NEWS rules')
 

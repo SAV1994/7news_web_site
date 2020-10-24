@@ -369,7 +369,7 @@ a:hover {
   margin: 15px 25px 20px 25px;
 }
 
-.btn-submit, .btn-news, .button-comment {
+.btn-submit, .btn-news, .button-comment, .btn-reg {
   width: 160px;
   height: 50px;
   display: flex;
@@ -580,6 +580,46 @@ a:hover {
   max-width: 56%;
 }
 
+.rules h2 {
+  padding-bottom: 17px;
+  font-size: 24px;
+  color: #969393;
+}
+
+.registrar-form {
+  padding-left: 100px;
+}
+
+.rules p {
+  padding-bottom: 17px;
+}
+
+.reg-form {
+  margin-top: 23px;
+}
+
+.agree-submit {
+  margin-top: 40px;
+  align-self: flex-end;
+  display: flex;
+  flex-direction: row;
+}
+
+.agree-submit input {
+  transform: scale(1.5);
+  -ms-transform: scale(1.5);
+  -webkit-transform: scale(1.5);
+}
+
+.agree-submit label {
+  padding-left: 20px;
+}
+
+.agree-submit button {
+  position: absolute;
+  right: 18px;
+}
+
 @media (max-width: 1180px) {
   .logo {
     padding-left: 10px;
@@ -594,7 +634,7 @@ a:hover {
     flex-direction: column;
   }
 
-  .news-container .col-6 {
+  .news-container .col-6, .reg-form .col-7, .reg-form .col-5 {
     flex: 0 0 100%;
     max-width: 100%;
   }
@@ -612,6 +652,14 @@ a:hover {
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
+  }
+
+  .reg-form .row {
+    flex-direction: column;
+  }
+
+  .registrar-form {
+    padding: 0 20px;
   }
 }
 
@@ -792,5 +840,9 @@ a:hover {
 
   .news-form .container-fluid .col-12 {
     padding: 0;
+  }
+
+  .agree-submit button {
+    top: 250px;
   }
 }

@@ -69,7 +69,6 @@ class EditUser(LoginRequiredMixin, UpdateView):
     login_url = 'main:login'
 
     def get(self, request, *args, **kwargs):
-        print(kwargs)
         if request.user.pk != kwargs['pk']:
             raise Http404
         return super().get(request, *args, **kwargs)
