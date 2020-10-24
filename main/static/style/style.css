@@ -369,7 +369,7 @@ a:hover {
   margin: 15px 25px 20px 25px;
 }
 
-.btn-submit, .btn-news, .button-comment, .btn-reg {
+.btn-submit, .btn-news, .button-comment, .btn-reg, .btn-save {
   width: 160px;
   height: 50px;
   display: flex;
@@ -618,6 +618,12 @@ a:hover {
 .agree-submit button {
   position: absolute;
   right: 18px;
+}
+
+.btn-save {
+  position: absolute;
+  top: 200px;
+  right: 20px;
 }
 
 @media (max-width: 1180px) {

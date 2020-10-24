@@ -87,8 +87,10 @@ class EditUser(LoginRequiredMixin, UpdateView):
         return response_redirect
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data()
         user_news = News.objects.filter(author_id=self.request.user.pk)
+        if '/by_comm' in self.request.path_info:
+            user_news = sorted(user_news, key=lambda entry: entry.comment_set.count(), reverse=True)
+        context = super().get_context_data()
         context['news'] = user_news
         return context
 

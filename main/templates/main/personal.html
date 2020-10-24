@@ -5,30 +5,71 @@
 {% block title %}{{ user.first_name }} {{ user.last_name }}{% endblock %}
 
 {% block sctipts %}
+  <script src="{% static 'scripts/sort_buttons.js' %}"></script>
   <script src="{% static 'scripts/comments_counter.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-  <h1>Personal account</h1>
-  <div class="user-info">
-    <form method="post">
-      {% csrf_token %}
-      {{ form|crispy }}
-      <button type="submit">Save</button>
-    </form>
-  </div>
-  {% if news %}
-    <div class="user-news">
-      {% for n in news %}
-        <img src="{{ n.image.url }}">
-        <a href="{% url 'main:detail' pk=n.pk %}">
-          {{ n.header }}
-          {{ n.sub_header }}
-          {{ n.teaser }}
-        </a>
-        <a href="{% url 'main:detail' pk=n.pk %}#comment-form">Comments<span class="comments-counter" data-news-id="{{ n.pk }}"></span></a>
-        <a href="{% url 'main:edit_news' pk=n.pk %}">Edit news</a>
-      {% endfor %}
+  <div class="red-row"></div>
+  <div class="container-fluid main-content">
+    <div class="row news-list-nav">
+      <div class="col-12">
+        <div class="rectangle"></div>
+        <h1 class="main-header">PERSONAL ACCOUNT</h1>
+      </div>
     </div>
-  {% endif %}
+    <div class="container-fluid registrar-form">
+      <form class="reg-form" method="post">
+        {% csrf_token %}
+        {{ form.consent_with_rules|as_crispy_field }}
+       <div class="row">
+        <div class="block-one col-7">
+          {{ form.first_name|as_crispy_field }}
+          {{ form.last_name|as_crispy_field }}
+          {{ form.email|as_crispy_field }}
+        </div>
+        <div class="block-two col-5">
+          {{ form.password|as_crispy_field }}
+          {{ form.password_confirmation|as_crispy_field }}
+          <button class="btn-save" type="submit">SAVE</button>
+        </div>
+       </div>
+      </form>
+    </div>
+    <div class="container-fluid news-list">
+      {% if news %}
+        <div class="row news-list-nav">
+          <div class="col-6">
+            <div class="rectangle"></div>
+            <h1 class="main-header">MY NEWS</h1>
+          </div>
+          <div class="col-6 sorter">
+            <a name="news"></a>
+            <spam>Sort news by:&nbsp;&nbsp;&nbsp; <a class="sort-by-date button-pressed" href="{% url 'main:personal' pk=request.user.pk %}#news">date</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a class="sort-by-comments" href="{% url 'main:personal_by_comm' pk=request.user.pk %}#news">comments</a> </spam>
+          </div>
+        </div>
+        <div class="row news-container">
+          {% for n in news %}
+            <div class="col-6">
+              <article>
+                <div class="row">
+                  <div class="col-7 news-image">
+                    <img src="{{ n.image.url }}">
+                  </div>
+                  <div class="col-5 news-info">
+                    <a href="{% url 'main:detail' pk=n.pk %}">
+                      <h3>{{ n.header }}</h3>
+                      <h4>{{ n.sub_header }}</h4>
+                      <p>{{ n.teaser }}</p>
+                    </a>
+                    <a class="comm" href="{% url 'main:detail' pk=n.pk %}#comment_form"><span class="comments-counter" data-news-id="{{ n.pk }}"></span>&nbsp;Comments</a>
+                  </div>
+                </div>
+              </article>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}

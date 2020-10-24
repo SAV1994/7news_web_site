@@ -13,6 +13,7 @@ urlpatterns = [
     path('news/', views.add_news, name='add_news'),
     path('detail/<int:pk>', views.detail, name='detail'),
     path('user/<int:pk>', views.EditUser.as_view(), name='personal'),
+    path('user/<int:pk>/by_comm', views.EditUser.as_view(), name='personal_by_comm'),
     path('news/<int:pk>', views.EditNews.as_view(), name='edit_news'),
     path('delete_news/<int:pk>', views.delete_news, name='delete_news'),
 ]
