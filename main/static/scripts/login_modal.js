@@ -1,12 +1,12 @@
 $(function() {
+
     $('.login').click(function() {
-        $('.modal-container').show();
+        $('.modal-container').css('display', 'flex');
         $('body').addClass('stop-scrolling');
     });
-    $('.modal-container').click(function(event) {
-        if (event.target === this) {
-            $(this).hide();
-            $('body').removeClass('stop-scrolling');
-        }
+
+    $('.btn-close').click(function() {
+        $('.modal-container').css('display', 'none');
+        $('body').removeClass('stop-scrolling');
     });
 })

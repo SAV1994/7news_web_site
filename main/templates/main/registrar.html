@@ -4,20 +4,41 @@
 {% block title %}Registration{% endblock %}
 
 {% block content %}
-  {% if rules %}
-    <h1>Register user</h1>
-    <div>
-      <h2>7news rules:</h2>
-      <ol>
-        {% for rule in rules %}
-          <li>{{ rule.rule }}</li>
-        {% endfor %}
-      </ol>
+  <div class="red-row"></div>
+  <div class="container-fluid main-content">
+    <div class="row news-list-nav">
+      <div class="col-12">
+        <div class="rectangle"></div>
+        <h1 class="main-header">REGISTER USER</h1>
+      </div>
     </div>
-  {% endif %}
-  <form method="post">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button type="submit">Register</button>
-  </form>
+    <div class="registrar-form">
+      {% if rules %}
+        <div class="rules">
+          <h2>7NEWS RULES:</h2>
+          {% for rule in rules %}
+            <p>{{ rule.rule }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+      <form class="reg-form" method="post">
+        {% csrf_token %}
+        <div class="row">
+          <div class="block-one col-7">
+            {{ form.first_name|as_crispy_field }}
+            {{ form.last_name|as_crispy_field }}
+            {{ form.email|as_crispy_field }}
+          </div>
+          <div class="block-two col-5">
+            {{ form.password|as_crispy_field }}
+            {{ form.password_confirmation|as_crispy_field }}
+            <div class="agree-submit">
+              {{ form.consent_with_rules|as_crispy_field }}
+              <button class="btn-reg" type="submit">REGISTER</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 {% endblock %}

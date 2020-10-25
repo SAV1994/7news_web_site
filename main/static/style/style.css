@@ -676,6 +676,10 @@ a:hover {
   .registrar-form {
     padding: 0 20px;
   }
+
+  .indent {
+    margin-top: 25px;
+  }
 }
 
 @media (max-width: 850px) {

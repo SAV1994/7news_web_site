@@ -6,8 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 
 
 class UserForm(forms.ModelForm):
-    password = forms.CharField(label='Password', max_length=128, min_length=6, widget=forms.PasswordInput,
-                               help_text=password_validation.password_validators_help_text_html)
+    password = forms.CharField(label='Password', max_length=128, min_length=6, widget=forms.PasswordInput)
     password_confirmation = forms.CharField(label='Confirm password', max_length=128, widget=forms.PasswordInput)
     consent_with_rules = forms.BooleanField(label='I agree 7NEWS rules')
 
@@ -45,14 +44,17 @@ class NewsForm(forms.ModelForm):
     class Meta:
         model = News
         fields = '__all__'
-        widgets = {'author': forms.HiddenInput}
+        widgets = {'author': forms.HiddenInput, 'teaser': forms.Textarea, 'full_text': forms.Textarea}
+        labels = {'image': 'LOAD', 'teaser': 'Teaser (maximum of 320 characters)'}
 
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = '__all__'
-        widgets = {'news': forms.HiddenInput, 'comment': forms.HiddenInput, 'author': forms.HiddenInput}
+        widgets = {'news': forms.HiddenInput, 'comment': forms.HiddenInput, 'author': forms.HiddenInput,
+                   'text': forms.Textarea}
+        labels = {'text': 'leave a comment'}
 
 
 class UserAuthenticationForm(AuthenticationForm):

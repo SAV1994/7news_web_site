@@ -5,19 +5,60 @@
 {% block title %}Add news{% endblock %}
 
 {% block sctipts %}
-  <script src="{% static 'scripts/check_news_form.js' %}"></script>
+  <script src="{% static 'scripts/news_form.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-  <h1>Add news</h1>
-  <form class="news-form" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form|crispy }}
-    {% if request.path_info == '/news/' %}
-      <button class="button-save" type="submit" disabled>Save</button>
-    {% else %}
-      <a href="{% url 'main:delete_news' pk=news.pk %}"><button type="button">Delete</button></a>
-      <button class="button-save" type="submit">Save</button>
-    {% endif %}
-  </form>
+  <div class="red-row"></div>
+  <div class="container-fluid main-content">
+    <div class="row news-list-nav">
+      <div class="col-6">
+        <div class="rectangle"></div>
+        <h1 class="main-header">ADD NEWS</h1>
+      </div>
+    </div>
+    <form class="news-form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.author|as_crispy_field }}
+      <div class="row">
+        <div class="col-12">
+          {{ form.header|as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          {{ form.sub_header|as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 image-input">
+          <h4>Image:&nbsp;&nbsp;&nbsp;<span class="file-name"></span></h4>
+          <div class="image-input-btns">
+            {{ form.image|as_crispy_field }}
+            <button class="btn-reset" type="button"></button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          {{ form.teaser|as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          {{ form.full_text|as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 news-btns">
+          {% if request.path_info == '/news/' %}
+            <button class="button-save btn-news" type="submit" disabled>SAVE</button>
+          {% else %}
+            <a class="btn-news" href="{% url 'main:delete_news' pk=news.pk %}">DELETE</a>
+            <button class="button-save btn-news" type="submit">SAVE</button>
+          {% endif %}
+        </div>
+      </div>
+    </form>
+  </div>
 {% endblock %}
