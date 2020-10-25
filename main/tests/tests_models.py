@@ -7,8 +7,7 @@ from ..models import User, Rule, News, Comment
 class UserModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        User.objects.create(email='test@test.com', password='123qwe321', first_name='Anton',
-                            last_name='Gorodetskiy')
+        User.objects.create(email='test@test.com', password='123qwe321', first_name='Ivan', last_name='Ivanov')
 
     def setUp(self):
         self.user = User.objects.get(id=1)
@@ -58,8 +57,8 @@ class RuleModelTest(TestCase):
 class NewsModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        User.objects.create(email='test@test.com', password='123qwe321', first_name='Anton',
-                            last_name='Gorodetskiy')
+        User.objects.create(email='test@test.com', password='123qwe321', first_name='Ivan',
+                            last_name='Ivanov')
         News.objects.create(author=User.objects.get(id=1), header='Header', sub_header='Sub header',
                             image=tempfile.NamedTemporaryFile(suffix=".jpg").name, teaser='Teaser',
                             full_text='Full text')
@@ -111,8 +110,8 @@ class NewsModelTest(TestCase):
 class CommentModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        User.objects.create(email='test@test.com', password='123qwe321', first_name='Anton',
-                            last_name='Gorodetskiy')
+        User.objects.create(email='test@test.com', password='123qwe321', first_name='Ivan',
+                            last_name='Ivanov')
         News.objects.create(author=User.objects.get(id=1), header='Header', sub_header='Sub header',
                             image=tempfile.NamedTemporaryFile(suffix=".jpg").name, teaser='Teaser',
                             full_text='Full text')

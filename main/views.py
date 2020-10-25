@@ -30,7 +30,10 @@ def index(request):
     """Main page controller"""
 
     news = News.objects.all()
-    banner = random.choice(news)
+    if news:
+        banner = random.choice(news)
+    else:
+        banner = None
     if request.path_info == '/by_comments/':
         news = sorted(news, key=lambda entry: entry.comment_set.count(), reverse=True)
     context = {'news': news, 'banner': banner}
@@ -99,7 +102,6 @@ class EditUser(LoginRequiredMixin, UpdateView):
 def add_news(request):
     """Add news page controller"""
 
-    print(request.path_info)
     if request.method == 'POST':
         form = NewsForm(request.POST, request.FILES)
         if form.is_valid():
@@ -145,7 +147,6 @@ class EditNews(LoginRequiredMixin, UpdateView):
         return super().post(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        print(self.request.method)
         context = super().get_context_data()
         return context
 
